@@ -1,0 +1,9 @@
+{
+  "name": "CDI Governance & Presentation System",
+  "description": "A complete governance, presentation, and organizational memory system for Constructive Designs Inc., integrated with Google Workspace.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
