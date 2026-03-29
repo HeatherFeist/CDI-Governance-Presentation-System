@@ -1,12 +1,13 @@
 import { motion } from "motion/react";
 import { Brain, Vote, Play, CheckCircle2 } from "lucide-react";
 
-interface SlideProps {
+export interface SlideProps {
   type: 'intro' | 'mission' | 'snapshot' | 'vision' | 'topic' | 'mentor' | 'chapter' | 'closing';
   title: string;
   subtitle?: string;
   content?: string;
   data?: any;
+  key?: any; // Added to satisfy tsc in some environments
 }
 
 export default function Slide({ type, title, subtitle, content, data }: SlideProps) {
@@ -62,24 +63,24 @@ export default function Slide({ type, title, subtitle, content, data }: SlidePro
       {type === 'topic' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
           <motion.div variants={itemVariants} className="bg-white/5 p-8 rounded-3xl border border-white/10 text-left space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-neutral-500">Where We Are Now</h3>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-neutral-500">1. Where We Are Now</h3>
             <p className="text-lg text-neutral-300">{data?.now || "Grounding data..."}</p>
           </motion.div>
           <motion.div variants={itemVariants} className="bg-white/5 p-8 rounded-3xl border border-white/10 text-left space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-neutral-500">Where We're Headed</h3>
+            <h3 className="text-xs font-bold uppercase tracking-widest text-neutral-500">2. Where We're Headed</h3>
             <p className="text-lg text-neutral-300">{data?.headed || "Vision data..."}</p>
           </motion.div>
           <motion.button variants={itemVariants} className="flex items-center justify-between p-6 bg-white text-neutral-900 rounded-2xl font-medium hover:bg-neutral-200 transition-all">
             <div className="flex items-center gap-4">
               <Brain className="w-6 h-6" />
-              <span>Interactive Brainstorming</span>
+              <span>3. Brainstorming & Action Planning</span>
             </div>
             <Play className="w-4 h-4" />
           </motion.button>
           <motion.button variants={itemVariants} className="flex items-center justify-between p-6 bg-white/10 text-white rounded-2xl font-medium hover:bg-white/20 transition-all border border-white/10">
             <div className="flex items-center gap-4">
               <Vote className="w-6 h-6" />
-              <span>Cast Your Vote</span>
+              <span>4. Final Vote & Decision</span>
             </div>
             <Play className="w-4 h-4" />
           </motion.button>
@@ -90,10 +91,10 @@ export default function Slide({ type, title, subtitle, content, data }: SlidePro
         <div className="space-y-6 mt-12">
           <motion.div variants={itemVariants} className="flex items-center justify-center gap-4 text-green-400">
             <CheckCircle2 className="w-8 h-8" />
-            <span className="text-2xl">All priorities confirmed.</span>
+            <span className="text-2xl">Decisions Voted & Confirmed.</span>
           </motion.div>
           <motion.p variants={itemVariants} className="text-neutral-500">
-            Next month's meeting packet has been auto-generated.
+            Voted items have been automatically added to next month's "Where We're Headed" vision.
           </motion.p>
         </div>
       )}

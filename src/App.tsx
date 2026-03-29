@@ -268,7 +268,7 @@ function PresentationEngine() {
     { type: 'topic', title: "Chapter Writing", subtitle: "Topic 01", data: { now: "40% complete", headed: "Finalize outline" } },
     { type: 'mentor', title: "Mentor Feedback", subtitle: "Reflection", content: "Mentors suggest focusing more on the 'Community' section of the chapter." },
     { type: 'chapter', title: "Chapter Progress", subtitle: "Dashboard", content: "Current focus: Section 2 - Sustainable Materials." },
-    { type: 'closing', title: "Meeting Summary", subtitle: "Next Steps", content: "Decisions made: Approved Section 2 outline. Set next meeting for May 15." },
+    { type: 'closing', title: "Meeting Summary", subtitle: "Next Steps", content: "Voted items have been moved to next month's vision for action planning." },
   ];
 
   return (
@@ -322,11 +322,21 @@ function PresentationEngine() {
                 <h3 className="text-sm font-bold uppercase tracking-widest text-neutral-400">Director's Script</h3>
                 <div className="space-y-4 text-sm leading-relaxed">
                   <p className="font-bold">Slide {step + 1}: {slides[step].title}</p>
-                  <p className="text-neutral-600 italic">
-                    "Welcome everyone. Today we are grounding ourselves in our mission and looking ahead to our next milestones."
-                  </p>
+                  <div className="text-neutral-600 italic space-y-2">
+                    {slides[step].type === 'topic' ? (
+                      <>
+                        <p>"We are now looking at {slides[step].title}."</p>
+                        <p>"1. Grounding: Here is where we are now."</p>
+                        <p>"2. Vision: Here is where we are headed based on previous decisions."</p>
+                        <p>"3. Brainstorming & Action Planning: Let's explore how to achieve this vision and create our concrete action plan for this month."</p>
+                        <p>"4. Voting: Finally, we will vote to confirm our path forward."</p>
+                      </>
+                    ) : (
+                      <p>"Welcome everyone. Today we are grounding ourselves in our mission and looking ahead to our next milestones."</p>
+                    )}
+                  </div>
                   <p className="text-neutral-500">
-                    Pacing: 2 minutes. Focus on setting a welcoming tone.
+                    {slides[step].type === 'topic' ? "Focus on guiding the group from vision to concrete action steps during the brainstorm." : "Focus on setting a welcoming tone."}
                   </p>
                 </div>
               </div>
