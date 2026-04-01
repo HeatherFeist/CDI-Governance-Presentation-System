@@ -1,1 +1,124 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 @import "tailwindcss";
+
+/* ======================================================
+   CDI MIDNIGHT THEME – Constructive Designs Inc.
+   ====================================================== */
+
+:root {
+  --bg-main: #141824;
+  --bg-card: #1F2536;
+  --bg-glass: rgba(31, 37, 54, 0.6);
+  --bg-glass-heavy: rgba(20, 24, 40, 0.85);
+  --border-subtle: #2A324A;
+  --text-primary: #FFFFFF;
+  --text-secondary: #A0AEC0;
+  --text-muted: #718096;
+  --primary: #2D68FF;
+  --primary-glow: #2D68FF40;
+  --primary-dark: #2558D9;
+  --cyan: #00C2FF;
+  --gradient-primary: linear-gradient(135deg, #2D68FF 0%, #00C2FF 100%);
+  --gradient-glow: linear-gradient(135deg, rgba(45, 104, 255, 0.3) 0%, rgba(0, 194, 255, 0.15) 100%);
+  --blur-lg: blur(20px);
+  --blur-xl: blur(32px);
+  --glow-blue: 0 0 30px rgba(45, 104, 255, 0.4);
+  --glow-cyan: 0 0 30px rgba(0, 194, 255, 0.3);
+}
+
+body, html {
+  background: var(--bg-main);
+  color: var(--text-primary);
+  margin: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  min-height: 100vh;
+}
+
+/* Glass morphism */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: var(--blur-xl);
+  -webkit-backdrop-filter: var(--blur-xl);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 1.5rem;
+}
+
+.glass-heavy {
+  background: var(--bg-glass-heavy);
+  backdrop-filter: var(--blur-xl);
+  -webkit-backdrop-filter: var(--blur-xl);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: var(--gradient-primary);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: 800;
+}
+
+/* Primary gradient button */
+.btn-primary {
+  background: var(--gradient-primary);
+  color: white;
+  font-weight: 600;
+  padding: 0.75rem 1.75rem;
+  border-radius: 1rem;
+  border: none;
+  box-shadow: 0 8px 25px rgba(45, 104, 255, 0.3);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 35px rgba(45, 104, 255, 0.5);
+}
+
+.btn-primary:disabled {
+  opacity: 0.5;
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* Card styles */
+.cdi-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 1.5rem;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.cdi-card:hover {
+  border-color: rgba(45, 104, 255, 0.4);
+  box-shadow: 0 10px 30px rgba(45, 104, 255, 0.2);
+  transform: translateY(-4px);
+}
+
+/* Hero glow background */
+.hero-glow {
+  position: relative;
+  overflow: hidden;
+}
+
+.hero-glow::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--gradient-glow);
+  opacity: 0.6;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Gradient background overlay for header sections */
+.cdi-header-gradient {
+  background: linear-gradient(135deg, rgba(45, 104, 255, 0.15) 0%, rgba(0, 194, 255, 0.08) 100%);
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-12px); }
+}

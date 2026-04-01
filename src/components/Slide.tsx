@@ -7,7 +7,7 @@ export interface SlideProps {
   subtitle?: string;
   content?: string;
   data?: any;
-  key?: any; // Added to satisfy tsc in some environments
+  key?: any;
 }
 
 export default function Slide({ type, title, subtitle, content, data }: SlideProps) {
@@ -39,13 +39,14 @@ export default function Slide({ type, title, subtitle, content, data }: SlidePro
       <div className="space-y-4">
         <motion.h2 
           variants={itemVariants}
-          className="text-sm font-semibold uppercase tracking-[0.4em] text-neutral-500"
+          className="text-sm font-semibold uppercase tracking-[0.4em]"
+          style={{ color: 'var(--text-muted)' }}
         >
           {subtitle || type}
         </motion.h2>
         <motion.h1 
           variants={itemVariants}
-          className="text-7xl md:text-9xl font-light tracking-tight leading-none"
+          className="text-7xl md:text-9xl font-extrabold tracking-tight leading-none gradient-text"
         >
           {title}
         </motion.h1>
@@ -54,7 +55,8 @@ export default function Slide({ type, title, subtitle, content, data }: SlidePro
       {content && (
         <motion.p 
           variants={itemVariants}
-          className="text-2xl md:text-3xl font-serif italic text-neutral-400 max-w-3xl mx-auto leading-relaxed"
+          className="text-2xl md:text-3xl max-w-3xl mx-auto leading-relaxed"
+          style={{ color: 'var(--text-secondary)' }}
         >
           {content}
         </motion.p>
@@ -62,24 +64,51 @@ export default function Slide({ type, title, subtitle, content, data }: SlidePro
 
       {type === 'topic' && (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-          <motion.div variants={itemVariants} className="bg-white/5 p-8 rounded-3xl border border-white/10 text-left space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-neutral-500">1. Where We Are Now</h3>
-            <p className="text-lg text-neutral-300">{data?.now || "Grounding data..."}</p>
+          <motion.div
+            variants={itemVariants}
+            className="glass p-8 text-left space-y-4"
+          >
+            <h3
+              className="text-xs font-bold uppercase tracking-widest"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              1. Where We Are Now
+            </h3>
+            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>{data?.now || "Grounding data..."}</p>
           </motion.div>
-          <motion.div variants={itemVariants} className="bg-white/5 p-8 rounded-3xl border border-white/10 text-left space-y-4">
-            <h3 className="text-xs font-bold uppercase tracking-widest text-neutral-500">2. Where We're Headed</h3>
-            <p className="text-lg text-neutral-300">{data?.headed || "Vision data..."}</p>
+          <motion.div
+            variants={itemVariants}
+            className="glass p-8 text-left space-y-4"
+          >
+            <h3
+              className="text-xs font-bold uppercase tracking-widest"
+              style={{ color: 'var(--text-muted)' }}
+            >
+              2. Where We're Headed
+            </h3>
+            <p className="text-lg" style={{ color: 'var(--text-secondary)' }}>{data?.headed || "Vision data..."}</p>
           </motion.div>
-          <motion.button variants={itemVariants} className="flex items-center justify-between p-6 bg-white text-neutral-900 rounded-2xl font-medium hover:bg-neutral-200 transition-all">
+          <motion.button
+            variants={itemVariants}
+            className="btn-primary flex items-center justify-between p-6 rounded-2xl font-semibold w-full"
+          >
             <div className="flex items-center gap-4">
               <Brain className="w-6 h-6" />
               <span>3. Brainstorming & Action Planning</span>
             </div>
             <Play className="w-4 h-4" />
           </motion.button>
-          <motion.button variants={itemVariants} className="flex items-center justify-between p-6 bg-white/10 text-white rounded-2xl font-medium hover:bg-white/20 transition-all border border-white/10">
+          <motion.button
+            variants={itemVariants}
+            className="flex items-center justify-between p-6 rounded-2xl font-semibold w-full transition-all"
+            style={{
+              background: 'rgba(45,104,255,0.1)',
+              color: 'var(--text-primary)',
+              border: '1px solid rgba(45,104,255,0.3)',
+            }}
+          >
             <div className="flex items-center gap-4">
-              <Vote className="w-6 h-6" />
+              <Vote className="w-6 h-6" style={{ color: 'var(--cyan)' }} />
               <span>4. Final Vote & Decision</span>
             </div>
             <Play className="w-4 h-4" />
@@ -89,11 +118,15 @@ export default function Slide({ type, title, subtitle, content, data }: SlidePro
 
       {type === 'closing' && (
         <div className="space-y-6 mt-12">
-          <motion.div variants={itemVariants} className="flex items-center justify-center gap-4 text-green-400">
+          <motion.div
+            variants={itemVariants}
+            className="flex items-center justify-center gap-4"
+            style={{ color: 'var(--cyan)' }}
+          >
             <CheckCircle2 className="w-8 h-8" />
-            <span className="text-2xl">Decisions Voted & Confirmed.</span>
+            <span className="text-2xl font-semibold">Decisions Voted & Confirmed.</span>
           </motion.div>
-          <motion.p variants={itemVariants} className="text-neutral-500">
+          <motion.p variants={itemVariants} style={{ color: 'var(--text-muted)' }}>
             Voted items have been automatically added to next month's "Where We're Headed" vision.
           </motion.p>
         </div>
