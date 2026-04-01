@@ -1,0 +1,37 @@
+{
+  "hosting": {
+    "site": "meetings-7bfa7",
+    "public": "dist",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "/api/auth/google/url",
+        "function": "authUrl"
+      },
+      {
+        "source": "/auth/google/callback",
+        "function": "authCallback"
+      },
+      {
+        "source": "/api/setup",
+        "function": "setup"
+      },
+      {
+        "source": "/api/health",
+        "function": "health"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "functions": {
+    "source": "functions",
+    "runtime": "nodejs22"
+  }
+}

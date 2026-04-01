@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "smart-hub-7bfa7"
+  },
+  "targets": {
+    "smart-hub-7bfa7": {
+      "hosting": {
+        "meetings": [
+          "meetings-7bfa7"
+        ]
+      }
+    }
+  }
+}
