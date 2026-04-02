@@ -37,8 +37,8 @@ export default function App() {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen bg-neutral-50">
-        <Loader2 className="w-8 h-8 animate-spin text-neutral-400" />
+      <div className="flex items-center justify-center min-h-screen">
+        <Loader2 className="w-8 h-8 animate-spin text-cyan-400" />
       </div>
     );
   }
@@ -46,7 +46,7 @@ export default function App() {
   return (
     <Router>
       <Toaster position="top-center" />
-      <div className="min-h-screen bg-neutral-50 text-neutral-900 font-sans">
+      <div className="min-h-screen text-white font-sans">
         <Routes>
           <Route path="/" element={<Landing onReady={(o) => setOrg(o)} />} />
           <Route path="/dashboard" element={<Dashboard org={org} />} />
@@ -100,16 +100,16 @@ function Landing({ onReady }: { onReady: (org: any) => void }) {
         className="max-w-md w-full space-y-8 text-center"
       >
         <div className="space-y-2">
-          <h1 className="text-4xl font-light tracking-tight text-neutral-900">
+          <h1 className="text-4xl font-light tracking-tight text-white">
             CDI Governance System
           </h1>
-          <p className="text-neutral-500 italic font-serif">
+          <p className="text-indigo-300 italic font-serif">
             Run your board meetings in minutes — not hours.
           </p>
         </div>
 
-        <div className="bg-white p-8 rounded-3xl shadow-sm border border-neutral-100 space-y-6">
-          <p className="text-sm text-neutral-600">
+        <div className="bg-white/5 backdrop-blur-xl p-8 rounded-3xl border border-white/10 space-y-6">
+          <p className="text-sm text-neutral-300">
             Enter your Google Workspace domain to get started.
           </p>
           <div className="space-y-4">
@@ -119,12 +119,12 @@ function Landing({ onReady }: { onReady: (org: any) => void }) {
               value={domain}
               onChange={(e) => setDomain(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleStart()}
-              className="w-full px-4 py-3 rounded-xl border border-neutral-200 focus:outline-none focus:ring-2 focus:ring-neutral-900 transition-all text-center text-sm"
+              className="w-full px-4 py-3 rounded-xl border border-white/20 bg-white/5 text-white focus:outline-none focus:ring-2 focus:ring-cyan-400/50 transition-all text-center text-sm placeholder-white/30"
             />
             <button
               onClick={handleStart}
               disabled={busy}
-              className="w-full bg-neutral-900 text-white py-3 rounded-xl font-medium hover:bg-neutral-800 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
+              className="w-full bg-cyan-500 text-black py-3 rounded-xl font-medium hover:bg-cyan-400 transition-all flex items-center justify-center gap-3 disabled:opacity-50"
             >
               {busy ? (
                 <><Loader2 className="w-4 h-4 animate-spin" /> Connecting...</>
@@ -151,7 +151,7 @@ function Landing({ onReady }: { onReady: (org: any) => void }) {
           ].map((f) => (
             <div key={f.label} className="space-y-1">
               <div className="text-2xl">{f.icon}</div>
-              <p className="text-xs text-neutral-400">{f.label}</p>
+              <p className="text-xs text-indigo-300/70">{f.label}</p>
             </div>
           ))}
         </div>
@@ -218,27 +218,27 @@ function Dashboard({ org }: { org: any }) {
     <div className="max-w-7xl mx-auto p-8 space-y-12">
       <header className="flex justify-between items-end">
         <div className="space-y-1">
-          <h2 className="text-sm font-semibold uppercase tracking-widest text-neutral-400">
+          <h2 className="text-sm font-semibold uppercase tracking-widest text-indigo-400">
             {org?.domain || "Organization"}
           </h2>
-          <h1 className="text-4xl font-light">Governance Dashboard</h1>
+          <h1 className="text-4xl font-light text-white">Governance Dashboard</h1>
         </div>
         <div className="flex gap-2">
           <button
             onClick={() => setTab("meetings")}
-            className={`px-5 py-2 rounded-xl text-sm font-medium transition-all ${tab === "meetings" ? "bg-neutral-900 text-white" : "bg-white border border-neutral-200 hover:border-neutral-400"}`}
+            className={`px-5 py-2 rounded-xl text-sm font-medium transition-all border ${tab === "meetings" ? "bg-cyan-500/20 border-cyan-400/40 text-cyan-300" : "bg-white/5 border-white/10 text-neutral-300 hover:border-white/30"}`}
           >
             Meetings
           </button>
           <button
             onClick={() => setTab("documents")}
-            className={`px-5 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${tab === "documents" ? "bg-neutral-900 text-white" : "bg-white border border-neutral-200 hover:border-neutral-400"}`}
+            className={`px-5 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 border ${tab === "documents" ? "bg-cyan-500/20 border-cyan-400/40 text-cyan-300" : "bg-white/5 border-white/10 text-neutral-300 hover:border-white/30"}`}
           >
             <FolderOpen className="w-4 h-4" /> Documents
           </button>
           <button
             onClick={() => setTab("templates")}
-            className={`px-5 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 ${tab === "templates" ? "bg-neutral-900 text-white" : "bg-white border border-neutral-200 hover:border-neutral-400"}`}
+            className={`px-5 py-2 rounded-xl text-sm font-medium transition-all flex items-center gap-2 border ${tab === "templates" ? "bg-cyan-500/20 border-cyan-400/40 text-cyan-300" : "bg-white/5 border-white/10 text-neutral-300 hover:border-white/30"}`}
           >
             📋 Templates
           </button>
@@ -250,7 +250,7 @@ function Dashboard({ org }: { org: any }) {
 
       {tab === "meetings" && <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         <div className="col-span-2 space-y-6">
-          <h3 className="text-xl font-serif italic">12-Month Governance Cycle</h3>
+          <h3 className="text-xl font-serif italic text-white">12-Month Governance Cycle</h3>
           <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
             {(meetings.length > 0
               ? meetings
@@ -259,14 +259,14 @@ function Dashboard({ org }: { org: any }) {
               <div
                 key={meeting.id}
                 onClick={() => navigate(`/present/${meeting.id}`)}
-                className={`bg-white p-6 rounded-2xl border transition-all cursor-pointer group ${
+                className={`bg-white/5 backdrop-blur p-6 rounded-2xl border transition-all cursor-pointer group ${
                   meeting.month === currentMonth + 1
-                    ? "border-neutral-900 ring-1 ring-neutral-900"
-                    : "border-neutral-100 hover:border-neutral-300"
+                    ? "border-cyan-400/60 ring-1 ring-cyan-400/30"
+                    : "border-white/8 hover:border-cyan-400/30"
                 }`}
               >
                 <div className="flex justify-between items-start mb-4">
-                  <span className="text-2xl font-serif text-neutral-300 group-hover:text-neutral-900 transition-all">
+                  <span className="text-2xl font-serif text-indigo-400/50 group-hover:text-cyan-400 transition-all">
                     {meeting.month.toString().padStart(2, "0")}
                   </span>
                   {meeting.status === "completed" && <CheckCircle2 className="w-4 h-4 text-green-500" />}
@@ -279,7 +279,7 @@ function Dashboard({ org }: { org: any }) {
         </div>
 
         <div className="space-y-8">
-          <div className="bg-neutral-900 text-white p-8 rounded-3xl space-y-6">
+          <div className="bg-white/8 backdrop-blur-xl border border-white/10 text-white p-8 rounded-3xl space-y-6">
             <h3 className="text-2xl font-light">Next Meeting</h3>
             {nextMeeting ? (
               <div className="space-y-4">
@@ -316,7 +316,7 @@ function Dashboard({ org }: { org: any }) {
             <button
               onClick={() => nextMeeting && navigate(`/present/${nextMeeting.id}`)}
               disabled={!nextMeeting}
-              className="w-full bg-white text-neutral-900 py-3 rounded-xl font-medium hover:bg-neutral-100 transition-all flex items-center justify-center gap-2 disabled:opacity-40"
+              className="w-full bg-cyan-500 text-black py-3 rounded-xl font-medium hover:bg-cyan-400 transition-all flex items-center justify-center gap-2 disabled:opacity-40"
             >
               <Presentation className="w-4 h-4" />
               Start Presentation
@@ -324,16 +324,16 @@ function Dashboard({ org }: { org: any }) {
           </div>
 
           <div className="space-y-4">
-            <h3 className="text-sm font-semibold uppercase tracking-widest text-neutral-400">Quick Links</h3>
+            <h3 className="text-sm font-semibold uppercase tracking-widest text-indigo-400">Quick Links</h3>
             <div className="space-y-2">
               {["Agenda Template", "Action Tracker", "Decision Log", "Mentor Feedback"].map((link) => (
                 <a
                   key={link}
                   href="#"
-                  className="flex items-center justify-between p-4 bg-white rounded-xl border border-neutral-100 hover:bg-neutral-50 transition-all text-sm"
+                  className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all text-sm text-neutral-200"
                 >
                   {link}
-                  <ArrowRight className="w-4 h-4 text-neutral-300" />
+                  <ArrowRight className="w-4 h-4 text-indigo-400" />
                 </a>
               ))}
             </div>
@@ -520,7 +520,7 @@ function DocumentsPanel({ org }: { org: any }) {
         onDragLeave={() => setDragOver(false)}
         onDrop={(e) => { e.preventDefault(); setDragOver(false); handleFiles(e.dataTransfer.files); }}
         onClick={openDrivePicker}
-        className={`border-2 border-dashed rounded-3xl p-12 text-center cursor-pointer transition-all ${dragOver ? "border-neutral-900 bg-neutral-100" : "border-neutral-200 hover:border-neutral-400 bg-white"}`}
+        className={`border-2 border-dashed rounded-3xl p-12 text-center cursor-pointer transition-all ${dragOver ? "border-cyan-400 bg-cyan-500/10" : "border-white/20 hover:border-cyan-400/50 bg-white/3"}`}
       >
         {uploading ? (
           <div className="flex flex-col items-center gap-3">
@@ -530,7 +530,7 @@ function DocumentsPanel({ org }: { org: any }) {
         ) : (
           <div className="flex flex-col items-center gap-3">
             <span className="text-4xl">🗂️</span>
-            <p className="text-sm font-medium text-neutral-600">Click to browse Google Drive</p>
+            <p className="text-sm font-medium text-neutral-200">Click to browse Google Drive</p>
             <p className="text-xs text-neutral-400">Or drag and drop local files here</p>
           </div>
         )}
@@ -547,7 +547,7 @@ function DocumentsPanel({ org }: { org: any }) {
         <div className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-widest text-neutral-400">{docs.length} Document{docs.length !== 1 ? "s" : ""}</p>
           {docs.map((doc) => (
-            <div key={doc.id} className="flex items-center gap-4 bg-white p-5 rounded-2xl border border-neutral-100 hover:border-neutral-200 transition-all group">
+            <div key={doc.id} className="flex items-center gap-4 bg-white/5 p-5 rounded-2xl border border-white/8 hover:border-white/20 transition-all group">
               <span className="text-2xl">{iconForMime(doc.mime_type)}</span>
               <div className="flex-1 min-w-0">
                 <p className="font-medium text-sm truncate">{doc.name}</p>
@@ -561,9 +561,9 @@ function DocumentsPanel({ org }: { org: any }) {
                 <button
                   onClick={() => handleDownload(doc)}
                   title={doc.file_path?.startsWith("gdrive:") ? "Open in Google Drive" : "Download / View"}
-                  className="p-2 rounded-lg hover:bg-neutral-100 transition-all"
+                  className="p-2 rounded-lg hover:bg-white/10 transition-all"
                 >
-                  <Download className="w-4 h-4 text-neutral-500" />
+                  <Download className="w-4 h-4 text-neutral-400" />
                 </button>
                 <button
                   onClick={() => handleDelete(doc)}
@@ -836,11 +836,11 @@ function PresentationEngine({ org }: { org: any }) {
   const script = SLIDE_SCRIPTS[current.type];
 
   return (
-    <div className="h-screen bg-neutral-900 text-white flex flex-col overflow-hidden">
+    <div className="h-screen bg-[#070714] text-white flex flex-col overflow-hidden">
       {/* Header */}
       <header className="p-6 flex justify-between items-center border-b border-white/10 z-10">
         <div className="flex items-center gap-4">
-          <div className="w-8 h-8 bg-white rounded-full flex items-center justify-center text-neutral-900 font-bold text-xs">CDI</div>
+          <div className="w-8 h-8 bg-cyan-500 rounded-full flex items-center justify-center text-black font-bold text-xs">CDI</div>
           <span className="text-sm font-medium opacity-50">{monthLabel}</span>
         </div>
         <div className="flex items-center gap-4">
@@ -855,7 +855,7 @@ function PresentationEngine({ org }: { org: any }) {
           </button>
           <button
             onClick={() => setShowScript(!showScript)}
-            className={`px-4 py-1 rounded-full text-xs font-medium transition-all ${showScript ? "bg-white text-neutral-900" : "bg-white/10 text-white hover:bg-white/20"}`}
+            className={`px-4 py-1 rounded-full text-xs font-medium transition-all ${showScript ? "bg-cyan-400 text-black" : "bg-white/10 text-white hover:bg-white/20"}`}
           >
             Director's Script
           </button>
@@ -900,23 +900,23 @@ function PresentationEngine({ org }: { org: any }) {
             <motion.div
               initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }}
               transition={{ type: "spring", damping: 25, stiffness: 200 }}
-              className="absolute top-0 right-0 h-full w-80 bg-white text-neutral-900 p-8 shadow-2xl z-20 overflow-y-auto"
+              className="absolute top-0 right-0 h-full w-80 bg-slate-900/95 backdrop-blur-xl border-l border-white/10 text-white p-8 shadow-2xl z-20 overflow-y-auto"
             >
               <div className="space-y-5">
-                <h3 className="text-xs font-bold uppercase tracking-widest text-neutral-400">Director's Script</h3>
-                <p className="font-semibold text-sm">Slide {step + 1}: {current.title}</p>
+                <h3 className="text-xs font-bold uppercase tracking-widest text-indigo-400">Director's Script</h3>
+                <p className="font-semibold text-sm text-white">Slide {step + 1}: {current.title}</p>
                 {script ? (
                   <div className="space-y-4 text-sm">
-                    <p className="text-neutral-500 italic border-l-2 border-neutral-200 pl-3">{script.cue}</p>
+                    <p className="text-neutral-400 italic border-l-2 border-indigo-400/50 pl-3">{script.cue}</p>
                     <div className="space-y-2">
                       {script.lines.map((line, i) => (
-                        <p key={i} className="text-neutral-700 leading-relaxed">{line}</p>
+                        <p key={i} className="text-neutral-300 leading-relaxed">{line}</p>
                       ))}
                     </div>
                     {script.tip && (
-                      <div className="bg-amber-50 border border-amber-200 rounded-xl p-3">
-                        <p className="text-xs font-semibold text-amber-700 mb-1">Coaching Tip</p>
-                        <p className="text-xs text-amber-600">{script.tip}</p>
+                      <div className="bg-amber-400/10 border border-amber-400/30 rounded-xl p-3">
+                        <p className="text-xs font-semibold text-amber-300 mb-1">Coaching Tip</p>
+                        <p className="text-xs text-amber-400">{script.tip}</p>
                       </div>
                     )}
                   </div>
@@ -924,10 +924,10 @@ function PresentationEngine({ org }: { org: any }) {
                   <p className="text-neutral-400 text-sm italic">No script for this slide type.</p>
                 )}
                 {current.type === "topic" && (
-                  <div className="bg-neutral-50 border border-neutral-200 rounded-xl p-3 space-y-1">
-                    <p className="text-xs font-semibold text-neutral-500 uppercase tracking-widest">Current Sub-Step</p>
+                  <div className="bg-white/5 border border-white/10 rounded-xl p-3 space-y-1">
+                    <p className="text-xs font-semibold text-indigo-400 uppercase tracking-widest">Current Sub-Step</p>
                     {["Now", "Headed", "Brainstorm", "Vote", "Action Plan"].map((s, i) => (
-                      <p key={i} className={`text-xs ${i === topicSubStep ? "font-bold text-neutral-900" : "text-neutral-400"}`}>
+                      <p key={i} className={`text-xs ${i === topicSubStep ? "font-bold text-white" : "text-neutral-500"}`}>
                         {i === topicSubStep ? "▶ " : "  "}{i + 1}. {s}
                       </p>
                     ))}
@@ -936,7 +936,7 @@ function PresentationEngine({ org }: { org: any }) {
                 {current.type === "rollcall" && (
                   <div className="space-y-3">
                     <div>
-                      <p className="text-xs font-bold uppercase tracking-widest text-neutral-400">Board Member Roster</p>
+                      <p className="text-xs font-bold uppercase tracking-widest text-indigo-400">Board Member Roster</p>
                       <p className="text-xs text-neutral-500 mt-1">Names are checked off as members sign in.</p>
                     </div>
                     <div className="space-y-1.5">
