@@ -768,17 +768,27 @@ function PresentationEngine({ org }: { org: any }) {
   const scheduleSlideContentSave = (next: Record<string, any>) => {
     if (saveTimer.current) clearTimeout(saveTimer.current);
     saveTimer.current = setTimeout(async () => {
-      await supabase.from("meetings").update({ slide_content: next }).eq("id", meetingId!);
-      setSavedIndicator(true);
-      setTimeout(() => setSavedIndicator(false), 2000);
+      const { error } = await supabase.from("meetings").update({ slide_content: next }).eq("id", meetingId!);
+      if (error) {
+        toast.error("Save failed: " + error.message);
+      } else {
+        setSavedIndicator(true);
+        setTimeout(() => setSavedIndicator(false), 2000);
+      }
     }, 800);
   };
 
-  const handleSlideChange = (field: string, value: string) => {
+  const handleSlideChange = async (field: string, value: string) => {
     const topicId = current.topicId;
     // Topic fields — saved directly to topics row and reflected in local state
     if (topicId && ["now_state", "headed_state", "title", "brainstorm_notes", "vote_result", "action_plan"].includes(field)) {
-      supabase.from("topics").update({ [field]: value }).eq("id", topicId);
+      const { error } = await supabase.from("topics").update({ [field]: value }).eq("id", topicId);
+      if (error) {
+        toast.error("Save failed: " + error.message);
+        return;
+      }
+      setSavedIndicator(true);
+      setTimeout(() => setSavedIndicator(false), 2000);
       setTopics(prev => prev.map(t => t.id === topicId ? { ...t, [field]: value } : t));
       return;
     }

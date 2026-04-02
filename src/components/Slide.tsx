@@ -16,7 +16,7 @@ export interface SlideProps {
   editMode?: boolean;
   microStep?: number;    // 0-4 for topic slides
   onClose?: () => void;  // closing slide "close meeting" button
-  onChange?: (field: string, value: string) => void;
+  onChange?: (field: string, value: string) => void | Promise<void>;
 }
 
 // ─── Sub-components ──────────────────────────────────────────────────────────
