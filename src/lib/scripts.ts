@@ -78,6 +78,17 @@ export const SLIDE_SCRIPTS: Record<string, SlideScript> = {
     ],
     tip: "Celebrate any progress, no matter how small. Momentum in chapter writing is built meeting by meeting.",
   },
+  budget: {
+    cue: "Present financial data clearly — ground decisions in numbers before discussion",
+    lines: [
+      '"Let\'s take a moment to review our financial position."',
+      '"This shows our budget allocation versus actual spend — for both this month and this quarter."',
+      '"[Review the variance — positive means under budget, negative means over]"',
+      '"Does the board have any questions about these numbers before we move on?"',
+      '"Are there any line items we should flag for next month\'s planning?"',
+    ],
+    tip: "Keep this factual and brief. If there\'s a significant variance, acknowledge it and flag it for the action plan in the relevant topic discussion.",
+  },
   closing: {
     cue: "Slow down. This is the most important 5 minutes of the meeting",
     lines: [

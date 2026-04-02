@@ -1,7 +1,7 @@
 {
   "hosting": {
     "site": "meetings-7bfa7",
-    "public": "dist_new",
+    "public": "release",
     "ignore": [
       "firebase.json",
       "**/.*",

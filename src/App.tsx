@@ -326,15 +326,20 @@ function Dashboard({ org }: { org: any }) {
           <div className="space-y-4">
             <h3 className="text-sm font-semibold uppercase tracking-widest text-indigo-400">Quick Links</h3>
             <div className="space-y-2">
-              {["Agenda Template", "Action Tracker", "Decision Log", "Mentor Feedback"].map((link) => (
-                <a
-                  key={link}
-                  href="#"
-                  className="flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all text-sm text-neutral-200"
+              {[
+                { label: "Agenda Template",  action: () => setTab("templates") },
+                { label: "Action Tracker",   action: () => setTab("templates") },
+                { label: "Decision Log",     action: () => setTab("documents") },
+                { label: "Documents",        action: () => setTab("documents") },
+              ].map(({ label, action }) => (
+                <button
+                  key={label}
+                  onClick={action}
+                  className="w-full flex items-center justify-between p-4 bg-white/5 rounded-xl border border-white/10 hover:bg-white/10 transition-all text-sm text-neutral-200"
                 >
-                  {link}
+                  {label}
                   <ArrowRight className="w-4 h-4 text-indigo-400" />
-                </a>
+                </button>
               ))}
             </div>
           </div>
@@ -757,11 +762,17 @@ function PresentationEngine({ org }: { org: any }) {
       data:     { topicObj: t, liveVotes: liveVotes[t.id] ?? [], myVote: myVotes[t.id] ?? null, onCastVote: (v: any) => handleCastVote(t.id, v), currentUserId },
     })),
     { key: "mentor",  type: "mentor",  title: "Mentor Feedback",  subtitle: "Reflection", content: "Review mentor insights and incorporate into planning." },
+    { key: "budget",  type: "budget",  title: "Budget Review",    subtitle: "Financial Overview" },
     { key: "chapter", type: "chapter", title: "Chapter Progress", subtitle: "Dashboard",   content: "Track writing milestones and onboarding progress." },
     { key: "closing", type: "closing", title: "Meeting Summary",  subtitle: "Decisions Made", data: { topics } },
   ];
 
-  const slides = baseSlides.map((s) => ({ ...s, ...(slideOverrides[s.key] || {}) }));
+  const slides = baseSlides.map((s) => ({
+    ...s,
+    ...(slideOverrides[s.key] || {}),
+    // Budget slide: merge saved fields into data so Slide can read them
+    ...(s.key === "budget" ? { data: { ...(slideOverrides["budget"] || {}) } } : {}),
+  }));
   const current = slides[step] || slides[0];
 
   // Save slide content (debounced)
@@ -869,11 +880,13 @@ function PresentationEngine({ org }: { org: any }) {
           >
             Director's Script
           </button>
-          {meeting?.meet_link && (
+          {meeting?.meet_link ? (
             <a href={meeting.meet_link} target="_blank" rel="noreferrer"
               className="flex items-center gap-2 px-4 py-1.5 rounded-full text-xs font-medium bg-blue-500/20 border border-blue-400/30 text-blue-300 hover:bg-blue-500/30 transition-all">
               <Video className="w-3.5 h-3.5" /> Join Google Meet
             </a>
+          ) : (
+            <span className="text-xs text-neutral-600 italic hidden md:inline">No Meet link — set it on Dashboard</span>
           )}
           <button onClick={() => navigate("/dashboard")} className="text-sm opacity-50 hover:opacity-100 transition-all flex items-center gap-2">
             <LogOut className="w-4 h-4" /> Exit
@@ -981,7 +994,7 @@ function PresentationEngine({ org }: { org: any }) {
                           }
                         }}
                         placeholder="Add member name…"
-                        className="flex-1 text-sm border border-neutral-200 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-neutral-400"
+                        className="flex-1 text-sm bg-white/8 border border-white/20 text-white placeholder-white/30 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-1 focus:ring-cyan-400/50"
                       />
                       <button
                         onClick={() => {
@@ -990,7 +1003,7 @@ function PresentationEngine({ org }: { org: any }) {
                             setNewBoardMember("");
                           }
                         }}
-                        className="px-3 py-1.5 rounded-lg bg-neutral-900 text-white text-sm hover:bg-neutral-700 transition-all"
+                        className="px-3 py-1.5 rounded-lg bg-cyan-500 text-black text-sm hover:bg-cyan-400 transition-all font-bold"
                       >+</button>
                     </div>
                   </div>

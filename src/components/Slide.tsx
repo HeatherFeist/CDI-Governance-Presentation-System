@@ -6,7 +6,7 @@ import TopicMicroCycle from "./TopicMicroCycle";
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 export interface SlideProps {
-  type: "intro" | "mission" | "snapshot" | "vision" | "topic" | "mentor" | "chapter" | "closing" | "rollcall";
+  type: "intro" | "mission" | "snapshot" | "vision" | "topic" | "mentor" | "chapter" | "closing" | "rollcall" | "budget";
   title: string;
   subtitle?: string;
   content?: string;
@@ -400,7 +400,118 @@ export default function Slide({
       </motion.div>
     );
   }
+  // ── BUDGET ───────────────────────────────────────────────────────────────
+  if (type === "budget") {
+    const d = data ?? {};
+    const monthlyAllocated  = parseFloat(d.monthly_allocated  ?? "0") || 0;
+    const monthlyActual     = parseFloat(d.monthly_actual     ?? "0") || 0;
+    const quarterlyAllocated= parseFloat(d.quarterly_allocated?? "0") || 0;
+    const quarterlyActual   = parseFloat(d.quarterly_actual   ?? "0") || 0;
+    const fmt = (n: number) => n.toLocaleString("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
+    const pct = (actual: number, alloc: number) => alloc > 0 ? Math.round((actual / alloc) * 100) : 0;
+    const variance = (actual: number, alloc: number) => alloc - actual;
+    const varColor = (v: number) => v >= 0 ? "text-green-400" : "text-red-400";
+    const barColor = (p: number) => p > 100 ? "bg-red-500" : p > 80 ? "bg-amber-400" : "bg-cyan-400";
 
+    return (
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -20 }} transition={{ duration: 0.5 }}
+        className="flex flex-col justify-center space-y-8 max-w-4xl w-full px-4">
+        <div className="space-y-2">
+          <p className="text-xs font-semibold uppercase tracking-widest text-cyan-400">{subtitle ?? "Financial Overview"}</p>
+          <E value={title} field="title" tag="h2" className="text-5xl md:text-6xl font-light" placeholder="Budget Review" />
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {/* Monthly Budget */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
+            <p className="text-xs font-semibold uppercase tracking-widest text-indigo-400">This Month</p>
+            <div className="space-y-3">
+              {[
+                { label: "Allocated", value: edit ? null : fmt(monthlyAllocated), field: "monthly_allocated", raw: d.monthly_allocated ?? "0" },
+                { label: "Actual",    value: edit ? null : fmt(monthlyActual),    field: "monthly_actual",    raw: d.monthly_actual ?? "0" },
+              ].map(({ label, value, field, raw }) => (
+                <div key={field} className="flex items-center justify-between gap-4">
+                  <span className="text-sm text-neutral-400 w-24">{label}</span>
+                  {edit ? (
+                    <input type="number" defaultValue={raw} onBlur={(e) => onChange?.(field, e.target.value)}
+                      className="flex-1 bg-white/8 border border-white/20 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-cyan-400/60 text-right"
+                      placeholder="0" />
+                  ) : (
+                    <span className="text-base font-mono font-medium text-white">{value}</span>
+                  )}
+                </div>
+              ))}
+              <div className="pt-2 border-t border-white/10 space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-neutral-400">Variance</span>
+                  <span className={`font-mono font-semibold ${varColor(variance(monthlyActual, monthlyAllocated))}`}>
+                    {fmt(variance(monthlyActual, monthlyAllocated))}
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs text-neutral-500">
+                    <span>Spent</span><span>{pct(monthlyActual, monthlyAllocated)}%</span>
+                  </div>
+                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div className={`h-full rounded-full transition-all ${barColor(pct(monthlyActual, monthlyAllocated))}`}
+                      style={{ width: `${Math.min(pct(monthlyActual, monthlyAllocated), 100)}%` }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {/* Quarterly Budget */}
+          <div className="bg-white/5 border border-white/10 rounded-2xl p-6 space-y-4">
+            <p className="text-xs font-semibold uppercase tracking-widest text-purple-400">This Quarter</p>
+            <div className="space-y-3">
+              {[
+                { label: "Allocated", value: edit ? null : fmt(quarterlyAllocated), field: "quarterly_allocated", raw: d.quarterly_allocated ?? "0" },
+                { label: "Actual",    value: edit ? null : fmt(quarterlyActual),    field: "quarterly_actual",    raw: d.quarterly_actual ?? "0" },
+              ].map(({ label, value, field, raw }) => (
+                <div key={field} className="flex items-center justify-between gap-4">
+                  <span className="text-sm text-neutral-400 w-24">{label}</span>
+                  {edit ? (
+                    <input type="number" defaultValue={raw} onBlur={(e) => onChange?.(field, e.target.value)}
+                      className="flex-1 bg-white/8 border border-white/20 rounded-lg px-3 py-1.5 text-sm text-white focus:outline-none focus:border-purple-400/60 text-right"
+                      placeholder="0" />
+                  ) : (
+                    <span className="text-base font-mono font-medium text-white">{value}</span>
+                  )}
+                </div>
+              ))}
+              <div className="pt-2 border-t border-white/10 space-y-2">
+                <div className="flex items-center justify-between text-sm">
+                  <span className="text-neutral-400">Variance</span>
+                  <span className={`font-mono font-semibold ${varColor(variance(quarterlyActual, quarterlyAllocated))}`}>
+                    {fmt(variance(quarterlyActual, quarterlyAllocated))}
+                  </span>
+                </div>
+                <div className="space-y-1">
+                  <div className="flex justify-between text-xs text-neutral-500">
+                    <span>Spent</span><span>{pct(quarterlyActual, quarterlyAllocated)}%</span>
+                  </div>
+                  <div className="h-2 bg-white/10 rounded-full overflow-hidden">
+                    <div className={`h-full rounded-full transition-all ${barColor(pct(quarterlyActual, quarterlyAllocated))}`}
+                      style={{ width: `${Math.min(pct(quarterlyActual, quarterlyAllocated), 100)}%` }} />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Notes */}
+        {edit ? (
+          <textarea defaultValue={d.budget_notes ?? ""} onBlur={(e) => onChange?.("budget_notes", e.target.value)}
+            rows={3} placeholder="Budget notes, context, or action items…"
+            className="w-full bg-white/6 border border-white/15 rounded-2xl p-4 text-sm text-neutral-200 resize-none focus:outline-none focus:border-cyan-400/50 placeholder-white/20" />
+        ) : d.budget_notes ? (
+          <p className="text-neutral-400 text-sm leading-relaxed">{d.budget_notes}</p>
+        ) : null}
+      </motion.div>
+    );
+  }
   // ── FALLBACK ─────────────────────────────────────────────────────────────
   return (
     <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="flex items-center justify-center">
