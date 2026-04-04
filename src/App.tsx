@@ -411,7 +411,7 @@ function DocumentsPanel({ org }: { org: any }) {
           showPicker(resp.access_token);
         },
       });
-      tokenClient.requestAccessToken({ prompt: "" });
+      tokenClient.requestAccessToken({ prompt: "select_account" });
     });
   };
 

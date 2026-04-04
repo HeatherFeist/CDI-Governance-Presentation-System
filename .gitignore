@@ -3,6 +3,7 @@ build/
 dist/
 dist_new/
 release/
+dist_v2/
 coverage/
 .DS_Store
 *.log
