@@ -403,8 +403,22 @@ end; $$;
 -- STEP 7: REALTIME
 -- ─────────────────────────────────────────────────────────────────
 
-alter publication supabase_realtime add table public.attendees;
-alter publication supabase_realtime add table public.topic_votes;
+do $$
+begin
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname = 'supabase_realtime' and tablename = 'attendees'
+  ) then
+    alter publication supabase_realtime add table public.attendees;
+  end if;
+
+  if not exists (
+    select 1 from pg_publication_tables
+    where pubname = 'supabase_realtime' and tablename = 'topic_votes'
+  ) then
+    alter publication supabase_realtime add table public.topic_votes;
+  end if;
+end $$;
 
 -- ─────────────────────────────────────────────────────────────────
 -- Done! All tables, policies, and functions are ready.
